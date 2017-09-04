@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/default">
+<head>
+<title>基本情報</title>
+</head>
+<body>
+	<!-- /* Content of this page will be decorated by the elements of layout.html (task/layout) */ -->
+	<div layout:fragment="content">
+		<div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">児童情報<span th:if="${studentForm['new']}" th:remove="tag">新規</span></h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+		<div class="row">
+            <div class="col-lg-12">
+            	<div class="panel panel-default">
+            		<div class="panel-body">
+						<form method="post" th:action="@{/students/new}" th:method="${studentForm['new']} ? 'post' : 'put'" th:object="${studentForm}" role="form">
+							<div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('*')}">
+								<ul>
+								  	<li th:each="e : ${#fields.detailedErrors()}" th:class="${e.global}? globalerr : fielderr">
+								        <span th:if="${!e.global}" th:text="${e.fieldName + '  :'}">The field name</span>
+								        <span th:text="${e.message}">The error message</span>
+								    </li>
+								</ul>
+<!-- 							  	<p th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</p> -->
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-group">
+										<button class="btn btn-danger " name="submit" type="submit">登録</button>
+									</div>
+								</div>
+								<div class="col-lg-3">
+									<input th:replace="fragments/inputField :: input ('保護者氏名', 'hgshname', 'true')" />
+									<input th:replace="fragments/inputField :: input ('保護者氏名カナ', 'hgshkana', 'true')" />
+									<input th:replace="fragments/inputField :: input ('児童氏名', 'name', 'true')" />
+									<input th:replace="fragments/inputField :: input ('児童氏名カナ', 'kana', 'true')" />
+								</div>
+								<div class="col-lg-3">
+									<input th:replace="fragments/inputField :: input ('受給者証番号', 'jyukyusno', 'true')" />
+									<input th:replace="fragments/inputField :: input ('支給市町村', 'skschson', 'true')" />
+									<input th:replace="fragments/inputField :: input ('契約支給量', 'kykskryo', 'true')" />
+									<input th:replace="fragments/inputField :: input ('契約記入欄番号', 'kykrno', 'true')" />
+								</div>
+								<div class="col-lg-3">
+									<input th:replace="fragments/inputField :: input ('サービス開始日', 'sbsstartdate', 'false')" />
+									<input th:replace="fragments/inputField :: input ('サービス終了日', 'sbsenddate', 'false')" />
+									<input th:replace="fragments/inputField :: input ('契約日', 'kykdate', 'false')" />
+									<input th:replace="fragments/inputField :: input ('契約終了日', 'kykenddate', 'false')" />
+								</div>
+								<div class="col-lg-12">
+									<div class="form-group">
+										<button class="btn btn-danger " name="submit" type="submit">登録</button>
+									</div>
+								</div>
+							</div>
+							<input id="id" name="id" type="hidden" th:field="*{id}"/>
+						</form>
+					</div>
+				</div>
+            </div>
+            <!-- /.col-lg-12 -->
+		</div>
+	</div>
+	<div type="text/javascript" layout:fragment="customjs">
+		<script src="https://unpkg.com/flatpickr"></script>
+		<script src="https://unpkg.com/flatpickr@3.0.7/dist/l10n/ja.js"></script>
+		<script th:src="@{/js/jquery.autoKana.js}"></script>
+		<script type="text/javascript" >
+			$(document).ready(
+			  	$( function() {
+					 var optional_config={
+						  "locale": "ja"
+					 };
+				   	$( "#sbsstartdate" ).flatpickr(optional_config);
+				    $( "#sbsenddate" ).flatpickr(optional_config);
+				    $( "#kykdate" ).flatpickr(optional_config);
+				    $( "#kykenddate" ).flatpickr(optional_config);
+				    $.fn.autoKana('#hgshname', '#hgshkana');
+		    	})
+		    );
+		</script>
+	</div>
+</body>
+</html>

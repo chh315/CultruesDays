@@ -1,0 +1,19 @@
+<html>
+<body>
+	<form>
+		<th:block th:fragment="input (label, name, required)">
+			<div th:with="valid=${!#fields.hasErrors(name)}" th:class="${'form-group' + (valid ? '' : ' has-error')}" class="form-group">
+				<label class="control-label" for="*{__${name}__}">
+					<span th:text="${label}" th:remove="tag">Label</span>
+					<span class="asteriskField" th:if="${required}">*</span>
+				</label>
+				<input class="form-control" type="text" th:field="*{__${name}__}" />
+<!-- 				<th:block th:if="${!valid}"> -->
+<!-- 					<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span> -->
+<!-- 					<span class="help-inline" th:errors="*{__${name}__}">Error</span> -->
+<!-- 				</th:block> -->
+			</div>
+		</th:block>
+	</form>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/default">
+  <head>
+    <title>Task List</title>
+  </head>
+  <body>
+    <!-- /* Content of this page will be decorated by the elements of layout.html (task/layout) */ -->
+    <div layout:fragment="content">
+			<div class="row" th:replace="fragments/pagination :: pagination">
+			</div>
+		    <div class="row">
+			    <div class="col-lg-8" th:each="listing:${listings}">
+					<h3 th:text="${listing.name}"></h3>
+					<h4><span th:text="${listing.district}" class="label label-success"/>
+					   	<span th:text="${listing.rent + '元/月'}" class="label label-success"/>
+					   	<span th:text="${listing.construction}" class="label label-success"/>
+					   	<span th:text="${listing.area}" class="label label-success"/>
+					    <span th:text="${listing.orient}" class="label label-success"/>
+					    <span th:text="${listing.floors}" class="label label-success"/>
+					</h4>
+					<p th:text="${listing.sitediscription}">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+					<p th:text="${listing.owner + ': ' + listing.telephone}">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+					<p>
+						<div>
+							<a class="btn btn-primary" href="#" role="button" >查看</a>
+						</div>
+					</p>
+					<hr/>
+		        </div>
+			</div>
+			<div class="row" th:replace="fragments/pagination :: pagination">
+			</div>
+		</div>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html layout:decorator="layouts/default">
+  <head>
+    <title>Task List</title>
+  </head>
+  <body>
+    <!-- /* Content of this page will be decorated by the elements of layout.html (task/layout) */ -->
+    <div layout:fragment="content">
+			<div class="row" th:replace="fragments/pagination :: pagination">
+			</div>
+		    <div class="row">
+			    <div class="col-lg-8" th:each="house:${rentalHouses}">
+					<h3><a th:href="${house.url}" th:text="${house.name}" target="_blank">地址</a></h3>
+					<p class="help-block" th:if="${house.mylisting}">* 已添加到我的房源了</p>
+					<h4><span th:text="${house.district}" class="label label-success"/>
+					   	<span th:text="${house.rent + '元/月'}" class="label label-success"/>
+					   	<span th:text="${house.construction}" class="label label-success"/>
+					   	<span th:text="${house.area}" class="label label-success"/>
+					    <span th:text="${house.orient}" class="label label-success"/>
+					    <span th:text="${house.floors}" class="label label-success"/>
+					</h4>
+					<p th:text="${house.sitediscription}">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+					<p th:text="${house.owner + ': ' + house.telephone}">Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+					<p>
+						<div>
+							<a class="btn btn-danger" href="#" role="button" th:href="@{/addtomylisting(houseid=${house.id})}" th:if="${house.mylisting} == false">添加到我的房源</a>
+							<a class="btn btn-primary" href="#" role="button" th:href="@{/addtomylisting(houseid=${house.id})}" th:if="${house.mylisting}">查看我的房源</a>
+						</div>
+						<div class="text-right" th:text="${'该数据取得与' + #dates.format(house.retrievedatetime,'yyyy-MM-dd HH:mm')}"></div>
+					</p>
+					<hr/>
+		        </div>
+			</div>
+			<div class="row" th:replace="fragments/pagination :: pagination">
+			</div>
+		</div>
+  </body>
+</html>

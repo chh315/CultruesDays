@@ -1,0 +1,61 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+<link rel="stylesheet" href="../static/css/login.css" th:href="@{/css/login.css}"/>
+<title th:text="#{label.form.loginTitle}">Login</title>
+<script th:inline="javascript">
+/*<![CDATA[*/
+    function validate() {
+        if (document.f.username.value == "" && document.f.password.value == "") {
+            alert(/*[[#{message.username} + #{message.password}]]*/);
+            document.f.username.focus();
+            return false;
+        }
+        if (document.f.username.value == "") {
+            alert(/*[[#{message.username}]]*/);
+            document.f.username.focus();
+            return false;
+        }
+        if (document.f.password.value == "") {
+            alert(/*[[#{message.password}]]*/);
+            document.f.password.focus();
+            return false;
+        }
+    }
+/*]]>*/ 
+</script>
+</head>
+<body>
+    <div class="container">
+	    <form name="f" class="form-signin" th:action="@{/login}" action="login" method='POST' onsubmit="return validate();">
+	        <h4 class="form-signin-heading" th:text="#{label.form.loginTitle}">Please sign in</h4>
+	        <div th:if="${param.error}">
+                <div class="alert alert-danger" th:text="#{message.login.error}">
+                    Invalid username and password.
+                </div>
+            </div>
+            <div th:if="${param.logout}">
+                <div class="alert alert-info" th:text="#{message.logout}">
+                    You have been logged out.
+                </div>
+            </div>
+	        <label for="username" class="sr-only">Email address</label>
+	        <input type="email" id="username" name="username"  class="form-control" placeholder="Email address" th:placeholder="#{message.username}" required="true" autofocus="true" />
+	        <label for="password" class="sr-only">Password</label>
+	        <input type="password" id="password" name="password" class="form-control" placeholder="Password" th:placeholder="#{message.password}" required="true" />
+	        <div class="checkbox">
+	          <label>
+	            <input type="checkbox" value="remember-me" th:text="#{label.form.remember-me}" />
+	          </label>
+	        </div>
+	     	<button class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{label.form.signin}">Sign in</button>
+	        <a class="btn btn-link" th:href="@{/forgetPassword.html}" th:text="#{message.resetPassword}">forgot password?</a>
+	     </form>
+   	</div>
+   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+
+</html>

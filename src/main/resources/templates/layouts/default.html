@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="../../favicon.ico" />
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+  	<!-- vendors -->
+  	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.0/metisMenu.min.css" />
+  	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" />
+ 	<link href="../vendor/font-awesome/css/font-awesome.min.css" th:href="@{/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+	<link rel="stylesheet" href="../../static/css/sb-admin-2.css" th:href="@{/css/sb-admin-2.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css" />
+	<link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css" />
+    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE" th:text="#{app.name}">Dashboard Template for Bootstrap</title>
+    
+     	 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+
+  <body>
+
+    <div id="wrapper">
+	    <!-- Navigation -->
+	    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+		    <div class="navbar navbar-inverse navbar-fixed-top" th:replace="fragments/header :: header" />
+	        <div class="col-sm-3 col-md-2 sidebar" th:replace="fragments/sidebar :: sidebar" />
+		</nav>
+	    <div id="page-wrapper" layout:fragment="content">
+	    </div>
+	    <!-- Modal HTML -->
+	    <div id="successalert" class="modal fade">
+	        <div class="modal-dialog">
+		      <div class="modal-content alert alert-success">
+		        <div class="modal-body ">
+		          <p id="messageid" class="">This is a small modal.</p>
+		        </div>
+		      </div>
+		    </div>
+	    </div>
+    </div>
+    <!-- /#wrapper -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.7.0/metisMenu.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+	<script th:src="@{/js/sb-admin-2.js}"/>
+	<div type="text/javascript" layout:fragment="customjs" th:remove="tag"></div>
+	<script type="text/javascript" th:inline="javascript">
+	 $(function() {
+		 $('#buzselect').on('change', function() {
+	        $.ajax({
+			    type: "POST",
+				url: /*[[@{/buzzdate/change}]]*/,
+				data: $('#buzform').serialize(),
+         		success: function(msg){
+         			$("#buzselect").empty();
+			    	$("#buzselect").html(msg);
+			    	$('#messageid').empty();
+			    	$('#messageid').html('業務年月が変更されました。');
+			    	$('#successalert').modal('show');
+			    	setTimeout(function() {
+				    	$('#successalert').modal('hide');
+			    	}, 3000);
+		        },
+				error: function(){
+			    	$("<div></div>").html("業務年月変更できませんでした。");
+			 	}
+	       	});
+		});
+	});
+	</script>
+  </body>
+</html>

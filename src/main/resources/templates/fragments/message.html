@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+<div th:fragment="info-success" xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+  <p th:text="${msginfo}">Form successfully submitted</p>
+</div>
+<div th:fragment="buz-info-success" xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+	<option th:each="buzdateSeldate : ${session.settingsForm.buzdateSeldates}"
+           th:value="${buzdateSeldate.key}"
+           th:selected="${session.settingsForm.buzDate == buzdateSeldate.key}"
+           th:text="${buzdateSeldate.value}">
+   	</option>
+</div>
+</body>
+</html>
